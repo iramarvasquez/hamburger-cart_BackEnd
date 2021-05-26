@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express()
 
+const cors = require("cors")
+app.use(cors())
+
 //Importing Sequeleze
 const { Sequelize, DataTypes } = require('sequelize')
 const ProductModel = require('./models/products')
@@ -92,6 +95,6 @@ app.delete('/products/:id', async (req, res) => {
     res.send({ action: 'Deleted Product', productId: productId, productDeleted: deletingProduct  })
 })
 
-app.listen(8080, () => {
-    console.log('Starting ExpressJS in the 8080 port')
+app.listen(8081, () => {
+    console.log('Starting ExpressJS in the 8081 port')
 })
