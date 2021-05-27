@@ -8,6 +8,7 @@ app.use(cors())
 //Importing Sequeleze
 const { Sequelize, DataTypes } = require('sequelize')
 const ProductModel = require('./models/products')
+const PedidoModel = require('./models/pedido')
 
 // Connecting Sequelize with the database
 const sequelize = new Sequelize({
@@ -17,6 +18,7 @@ const sequelize = new Sequelize({
 
 // Declaring the connection and the data type
 const products = ProductModel(sequelize, DataTypes)
+const pedido = PedidoModel(sequelize, DataTypes)
 
 // We need to parse JSON coming from requests
 app.use(express.json())
@@ -92,7 +94,42 @@ app.delete('/products/:id', async (req, res) => {
     const productId = req.params.id
     const deletingProduct = await products.destroy({ where: { Id: productId } })
 
-    res.send({ action: 'Deleted Product', productId: productId, productDeleted: deletingProduct  })
+    res.send({ action: 'Deleted Product', productId: productId, productDeleted: deletingProduct })
+})
+
+app.post('/pedido', async (req, res) => {
+    const body = req.body
+
+    const newPedido = await pedido.create({
+
+
+        tomate: body.tomate,
+        cebola: body.cebola,
+        alface: body.alface,
+        cheedar: body.cheedar,
+        milho: body.milho,
+        batata_palha: body.batata_palha,
+        pepino_japones: body.pepino_japones,
+        carne: body.carne,
+        frango: body.frango,
+        calabresa: body.calabresa,
+        presunto: body.presunto,
+        bacon: body.bacon,
+        ovo: body.ovo,
+        batatas_fritas: body.batatas_fritas,
+        coca_cola_2l: body.coca_cola_2l,
+        coca_cola_350ml: body.coca_cola_350ml,
+        fanta_guarana_2l: body.fanta_guarana_2l,
+        fanta_laranja_2l: body.fanta_laranja_2l,
+        fanta_uva_2l: body.fanta_uva_2l,
+        sprite: body.sprite,
+        coca_cola_600ml: body.coca_cola_600ml,
+        mostarda: body.mostarda,
+        ketchup: body.ketchup,
+        maionese: body.maionese
+    })
+
+    res.json({ action: 'New Product Added', pedido: newPedido })
 })
 
 app.listen(8081, () => {
